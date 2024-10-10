@@ -1,0 +1,209 @@
+my-ai-platform/
+├── components/
+│   ├── FeatureList.js
+│   ├── BalancedScorecard.js
+│   ├── ScenarioButton.js
+│   └── HealthIndicator.js
+├── pages/
+│   ├── index.js
+├── styles/
+│   ├── globals.css
+│   └── balancedScorecard.module.css
+└── package.json
+import FeatureList from '../components/FeatureList';
+import BalancedScorecard from '../components/BalancedScorecard';
+
+export default function Home() {
+  return (
+    <div className="container">
+      <header className="header">
+        <h1>FutureM&A: Empowering SMEs with AI-Driven Strategy</h1>
+        <p>Revolutionize your business strategy and M&A with real-time insights and powerful AI tools.</p>
+      </header>
+      <FeatureList />
+      <BalancedScorecard />
+      <footer>
+        <p>FutureM&A © 2024 - Taking your SME to the next level with the power of AI.</p>
+      </footer>
+    </div>
+  );
+}
+import styles from '../styles/balancedScorecard.module.css';
+
+export default function FeatureList() {
+  const features = [
+    { name: "Strategy Development", icon: "📊" },
+    { name: "Deal Matching and M&A", icon: "🤝" },
+    { name: "Regulatory & Compliance", icon: "📜" },
+    { name: "Real-Time Data Integration", icon: "📈" },
+    { name: "Financial Forecasting", icon: "🔮" },
+    { name: "Operational Optimization", icon: "⚙️" },
+    { name: "Competitive Intelligence", icon: "👁️" },
+    { name: "Capital Raising Support", icon: "💰" },
+  ];
+
+  return (
+    <section className={styles.features}>
+      <h2>Main Features</h2>
+      <ul className={styles.featureList}>
+        {features.map((feature, index) => (
+          <li key={index} className={styles.featureItem}>
+            <span className={styles.featureIcon}>{feature.icon}</span>
+            {feature.name}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+import { useState } from 'react';
+import ScenarioButton from './ScenarioButton';
+import styles from '../styles/balancedScorecard.module.css';
+
+export default function BalancedScorecard() {
+  const [indicators, setIndicators] = useState({
+    revenue: "$500,000",
+    profitMargin: "20%",
+    growthPotential: "High",
+    marketPosition: "Strong"
+  });
+
+  const getHealthComment = () => {
+    if (indicators.growthPotential === "High") {
+      return "The company is positioned well for growth!";
+    } else if (indicators.profitMargin > "15%") {
+      return "Solid profit margins indicate a healthy business.";
+    } else {
+      return "Consider optimizing operations to boost profitability.";
+    }
+  };
+
+  const handleScenarioChange = (scenario) => {
+    if (scenario === "Expansion") {
+      setIndicators({
+        revenue: "$600,000",
+        profitMargin: "18%",
+        growthPotential: "Moderate",
+        marketPosition: "Expanding"
+      });
+    } else if (scenario === "Cost Reduction") {
+      setIndicators({
+        revenue: "$500,000",
+        profitMargin: "25%",
+        growthPotential: "High",
+        marketPosition: "Stable"
+      });
+    }
+  };
+
+  return (
+    <section className={styles.balancedScorecard}>
+      <h2>Company Health Dashboard</h2>
+      <div className={styles.indicators}>
+        <div><strong>Revenue:</strong> {indicators.revenue}</div>
+        <div><strong>Profit Margin:</strong> {indicators.profitMargin}</div>
+        <div><strong>Growth Potential:</strong> {indicators.growthPotential}</div>
+        <div><strong>Market Position:</strong> {indicators.marketPosition}</div>
+      </div>
+      <p className={styles.healthComment}>{getHealthComment()}</p>
+      <div className={styles.scenarioButtons}>
+        <ScenarioButton label="Expansion" onClick={() => handleScenarioChange("Expansion")} />
+        <ScenarioButton label="Cost Reduction" onClick={() => handleScenarioChange("Cost Reduction")} />
+      </div>
+    </section>
+  );
+}
+import styles from '../styles/balancedScorecard.module.css';
+
+export default function ScenarioButton({ label, onClick }) {
+  return (
+    <button className={styles.scenarioButton} onClick={onClick}>{label}</button>
+  );
+}
+.container {
+  font-family: Arial, sans-serif;
+  color: #f3f3f3;
+  background: linear-gradient(135deg, #1c1f26, #3a3f4b);
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 3rem;
+  color: #00e5ff;
+}
+
+.header p {
+  font-size: 1.2rem;
+  color: #b0bec5;
+}
+
+.features h2 {
+  color: #ff9800;
+}
+
+.featureList {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.featureItem {
+  background: #424242;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem;
+  color: #f5f5f5;
+  width: 120px;
+  font-size: 1.2rem;
+}
+
+.featureIcon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.balancedScorecard {
+  background: #263238;
+  border-radius: 15px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.indicators div {
+  margin: 0.5rem 0;
+}
+
+.healthComment {
+  color: #ffab00;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.scenarioButtons {
+  margin-top: 1rem;
+}
+
+.scenarioButton {
+  margin: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  background: #00e5ff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.scenarioButton:hover {
+  background: #00b8d4;
+}
+
+footer {
+  margin-top: 2rem;
+  color: #90a4ae;
+  font-size: 0.9rem;
+}
